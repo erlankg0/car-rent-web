@@ -27,4 +27,4 @@ def login(request):
 
 
 def login_up(request):
-    return render(request, 'pages/login_up.html')
+    return render(request, 'pages/sigup.html')
