@@ -25,6 +25,11 @@ class TeamAdmin(admin.ModelAdmin):
         'designation',
     )
     readonly_fields = ('get_img',)
+    search_fields = (
+        'first_name',
+        'last_name',
+        'designation',
+    )
 
 
 admin.site.register(Team, TeamAdmin)
