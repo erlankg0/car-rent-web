@@ -16,7 +16,11 @@ def cars(request):
 
 
 def about(request):
-    return render(request, 'pages/about.html')
+    team = Team.objects.all()
+    context = {
+        'teams': team
+    }
+    return render(request, 'pages/about.html', context=context)
 
 
 def contact(request):
