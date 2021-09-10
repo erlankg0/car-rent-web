@@ -3,7 +3,11 @@ from .models import Team
 
 
 def home(request):
-    return render(request, 'pages/index.html')
+    team = Team.objects.all()
+    context = {
+        'teams': team
+    }
+    return render(request, 'pages/index.html', context=context)
 
 
 # Create your views here.
