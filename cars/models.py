@@ -147,9 +147,12 @@ class Car(models.Model):
         ('5', '5'),
         ('6', '6'),
     )
-
+    TRANSMISSION = (
+        ('MN', 'MANUAL'),
+        ('AU', "AUTO/ROBOT"),
+    )
     year_choice = []
-    for r in range(2000, (datetime.datetime.now().year + 1)):
+    for r in range(1970, (datetime.datetime.now().year + 1)):
         year_choice.append((r, r))
 
     car_title = models.CharField(max_length=255)
@@ -160,6 +163,7 @@ class Car(models.Model):
     year = models.IntegerField('year', choices=year_choice)
     condition = models.CharField(choices=CONDITION_AUTO, max_length=100)
     description = models.TextField()
+    price = models.IntegerField()
     car_image = models.ImageField(upload_to='car_image/%Y/%m/%d')
     car_image_1 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
     car_image_2 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
@@ -167,16 +171,16 @@ class Car(models.Model):
     car_image_4 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
     features = models.CharField(max_length=100, choices=features_choices)
     body_style = models.CharField(max_length=100, choices=BODY_STYLE_CHOICE)
-    engine = models.CharField(max_length=255)
-    transmission = models.CharField(max_length=255)
+    engine = models.FloatField()
+    fuel_type = models.CharField(max_length=100, choices=FUEL_TYPE_CHOICE)
+    transmission = models.CharField(max_length=255, choices=TRANSMISSION)
     interior = models.CharField(max_length=255)
     miles = models.PositiveIntegerField()
     doors = models.CharField(max_length=255, default='4', choices=door_choices)
     passengers = models.IntegerField(default=3, )
     vin_no = models.CharField(max_length=17)
-    millage = models.IntegerField()
-    fuel_type = models.CharField(max_length=100, choices=FUEL_TYPE_CHOICE)
-    no_of_owners = models.CharField(max_length=100)
+    # millage = models.IntegerField()
+    # no_of_owners = models.CharField(max_length=100)
     is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(default=datetime.datetime.now, blank=True)
 
