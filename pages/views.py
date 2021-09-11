@@ -1,11 +1,16 @@
 from django.shortcuts import render
 from .models import Team
+from cars.models import Car
 
 
 def home(request):
     team = Team.objects.all()
+    featured_cars = Car.objects.filter(is_featured=True)
+    last_cars = Car.objects.all()
     context = {
-        'teams': team
+        'teams': team,
+        'featured_cars': featured_cars,
+        'last_cars': last_cars
     }
     return render(request, 'pages/index.html', context=context)
 

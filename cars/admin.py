@@ -11,18 +11,29 @@ class CarAdmin(admin.ModelAdmin):
     list_display = (
         'get_img',
         'car_title',
-        'state',
         'model',
+        'fuel_type',
+        'state',
         'price',
+        'is_featured',
 
     )
     list_display_links = (
         'get_img',
         'car_title',
-        'state',
         'model',
+        'state',
         'price',
-
+    )
+    list_editable = ('is_featured',)
+    list_filter = (
+        'fuel_type',
+        'model',
+    )
+    search_fields = (
+        'car_title',
+        'model',
+        'vin_no',
     )
 
 

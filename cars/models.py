@@ -1,5 +1,7 @@
 from django.db import models
 import datetime
+from ckeditor.fields import RichTextField
+from multiselectfield import MultiSelectField
 
 # Create your models here.
 """ Cars model 
@@ -32,35 +34,35 @@ created_date
 
 class Car(models.Model):
     STATE_CHOICE = (
-        ('CH', 'Чуйская область'),
-        ('TL', 'Талаская область'),
-        ('IS', 'Иссык-Кульская область'),
-        ('NR', 'Нарынская область'),
-        ('OS', 'Ошская область',),
-        ('BT', 'Баткенская область'),
-        ('DJ', 'Джалал Абадская область'),
+        ('CHUY', 'Чуйская область'),
+        ('TALAS', 'Талаская область'),
+        ('ISSYK-KULL', 'Иссык-Кульская область'),
+        ('NARYN', 'Нарынская область'),
+        ('OSH', 'Ошская область',),
+        ('BATKEN', 'Баткенская область'),
+        ('DJALA-ABAD', 'Джалал Абадская область'),
     )
     COLOR_CHOICE = (
-        ('RD', 'Красный'),
-        ('BL', 'Синий'),
-        ('YL', 'Жёлтый'),
-        ('GR', 'Зелёный'),
-        ('BK', 'Чёрный'),
-        ('PG', 'Розовый'),
-        ('WH', 'Белый'),
+        ('RED', 'Красный'),
+        ('BLUE', 'Синий'),
+        ('YELLOW', 'Жёлтый'),
+        ('GREEN', 'Зелёный'),
+        ('BLACK', 'Чёрный'),
+        ('PIG', 'Розовый'),
+        ('WHITE', 'Белый'),
     )
     CONDITION_AUTO = (
-        ('NW', 'Новая'),
-        ('PR', 'Отличная'),
-        ('GD', 'Хорошое'),
-        ('BD', 'Удовлетворительно'),
+        ('NEW', 'Новая'),
+        ('PERFECT', 'Отличная'),
+        ('GOOD', 'Хорошое'),
+        ('BAD', 'Удовлетворительно'),
     )
     BODY_STYLE_CHOICE = (
-        ('SDN', 'Седан'),
-        ('SRT', 'Спорт-Авто'),
+        ('SEDAN', 'Седан'),
+        ('SPORT-CAR', 'Спорт-Авто'),
         ('SUV', 'Внедорожник'),
-        ('HTC', 'Хэтчбек'),
-        ('PCP', 'Пикап'),
+        ('HATCH-BACK', 'Хэтчбек'),
+        ('PICK-UP', 'Пикап'),
     )
     state_choice = (
         ('AL', 'Alabama'),
@@ -133,10 +135,10 @@ class Car(models.Model):
     )
 
     FUEL_TYPE_CHOICE = (
-        ('BNZ', 'Бензин'),
-        ('DZL', 'Дизель'),
-        ('B-G', 'Бензин-Газ'),
-        ('ELC', 'Электро'),
+        ('PETROL', 'Бензин'),
+        ('DIESEL', 'Дизель'),
+        ('PETROL-GAZ', 'Бензин-Газ'),
+        ('ELECTRIC', 'Электро'),
 
     )
 
@@ -148,8 +150,8 @@ class Car(models.Model):
         ('6', '6'),
     )
     TRANSMISSION = (
-        ('MN', 'MANUAL'),
-        ('AU', "AUTO/ROBOT"),
+        ('MANUAL', 'MANUAL'),
+        ('AUTO', "AUTO/ROBOT"),
     )
     year_choice = []
     for r in range(1970, (datetime.datetime.now().year + 1)):
@@ -162,14 +164,14 @@ class Car(models.Model):
     model = models.CharField(max_length=100)
     year = models.IntegerField('year', choices=year_choice)
     condition = models.CharField(choices=CONDITION_AUTO, max_length=100)
-    description = models.TextField()
+    description = RichTextField()
     price = models.IntegerField()
     car_image = models.ImageField(upload_to='car_image/%Y/%m/%d')
     car_image_1 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
     car_image_2 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
     car_image_3 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
     car_image_4 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
-    features = models.CharField(max_length=100, choices=features_choices)
+    features = MultiSelectField(max_length=100, choices=features_choices)
     body_style = models.CharField(max_length=100, choices=BODY_STYLE_CHOICE)
     engine = models.FloatField()
     fuel_type = models.CharField(max_length=100, choices=FUEL_TYPE_CHOICE)
@@ -186,3 +188,6 @@ class Car(models.Model):
 
     def __str__(self):
         return self.car_title
+
+    class Meta:
+        ordering = ['-created_date']
