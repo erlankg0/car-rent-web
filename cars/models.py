@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 # Create your models here.
 """ Cars model 
@@ -31,10 +32,7 @@ created_date
 
 class Car(models.Model):
     STATE_CHOICE = (
-        ('CH', 'Чуйская область',
-         # ('BH', 'Бишкек'),
-         # ('TK', 'Токмок'),
-         ),
+        ('CH', 'Чуйская область'),
         ('TL', 'Талаская область'),
         ('IS', 'Иссык-Кульская область'),
         ('NR', 'Нарынская область'),
@@ -64,15 +62,76 @@ class Car(models.Model):
         ('HTC', 'Хэтчбек'),
         ('PCP', 'Пикап'),
     )
-    DOORS_CHOICE = (
-        ('6', 'Шести дверная'),
-        ('5', 'Пяти дверная'),
-        ('4', 'Четырех дверная'),
-        ('3', 'Трех дверная'),
-        ('2', 'Двух дверная'),
-        ('1', 'Одно дверная'),
-        ('7', 'Больше 6 дверей'),
+    state_choice = (
+        ('AL', 'Alabama'),
+        ('AK', 'Alaska'),
+        ('AZ', 'Arizona'),
+        ('AR', 'Arkansas'),
+        ('CA', 'California'),
+        ('CO', 'Colorado'),
+        ('CT', 'Connecticut'),
+        ('DE', 'Delaware'),
+        ('DC', 'District Of Columbia'),
+        ('FL', 'Florida'),
+        ('GA', 'Georgia'),
+        ('HI', 'Hawaii'),
+        ('ID', 'Idaho'),
+        ('IL', 'Illinois'),
+        ('IN', 'Indiana'),
+        ('IA', 'Iowa'),
+        ('KS', 'Kansas'),
+        ('KY', 'Kentucky'),
+        ('LA', 'Louisiana'),
+        ('ME', 'Maine'),
+        ('MD', 'Maryland'),
+        ('MA', 'Massachusetts'),
+        ('MI', 'Michigan'),
+        ('MN', 'Minnesota'),
+        ('MS', 'Mississippi'),
+        ('MO', 'Missouri'),
+        ('MT', 'Montana'),
+        ('NE', 'Nebraska'),
+        ('NV', 'Nevada'),
+        ('NH', 'New Hampshire'),
+        ('NJ', 'New Jersey'),
+        ('NM', 'New Mexico'),
+        ('NY', 'New York'),
+        ('NC', 'North Carolina'),
+        ('ND', 'North Dakota'),
+        ('OH', 'Ohio'),
+        ('OK', 'Oklahoma'),
+        ('OR', 'Oregon'),
+        ('PA', 'Pennsylvania'),
+        ('RI', 'Rhode Island'),
+        ('SC', 'South Carolina'),
+        ('SD', 'South Dakota'),
+        ('TN', 'Tennessee'),
+        ('TX', 'Texas'),
+        ('UT', 'Utah'),
+        ('VT', 'Vermont'),
+        ('VA', 'Virginia'),
+        ('WA', 'Washington'),
+        ('WV', 'West Virginia'),
+        ('WI', 'Wisconsin'),
+        ('WY', 'Wyoming'),
     )
+
+    features_choices = (
+        ('Cruise Control', 'Cruise Control'),
+        ('Audio Interface', 'Audio Interface'),
+        ('Airbags', 'Airbags'),
+        ('Air Conditioning', 'Air Conditioning'),
+        ('Seat Heating', 'Seat Heating'),
+        ('Alarm System', 'Alarm System'),
+        ('ParkAssist', 'ParkAssist'),
+        ('Power Steering', 'Power Steering'),
+        ('Reversing Camera', 'Reversing Camera'),
+        ('Direct Fuel Injection', 'Direct Fuel Injection'),
+        ('Auto Start/Stop', 'Auto Start/Stop'),
+        ('Wind Deflector', 'Wind Deflector'),
+        ('Bluetooth Handset', 'Bluetooth Handset'),
+    )
+
     FUEL_TYPE_CHOICE = (
         ('BNZ', 'Бензин'),
         ('DZL', 'Дизель'),
@@ -80,26 +139,46 @@ class Car(models.Model):
         ('ELC', 'Электро'),
 
     )
-    car_title = models.CharField(verbose_name='Названия авто.', max_length=255)
-    state = models.CharField(max_length=2, choices=STATE_CHOICE, verbose_name='Выбор области')
-    color = models.CharField(max_length=2, verbose_name='цвет', choices=COLOR_CHOICE)
-    model = models.CharField(max_length=200, verbose_name='Модель авто')
-    year = models.DateField(verbose_name='Дата авто', )
-    body_style = models.CharField(verbose_name='Тип кузова', max_length=3, unique=True,
-                                  help_text='Выбор кузова обязательно', choices=BODY_STYLE_CHOICE)
-    fuel_type = models.CharField(verbose_name='Тип топливо', choices=FUEL_TYPE_CHOICE, max_length=3)
-    kilometers = models.PositiveBigIntegerField(verbose_name='Пробег авто.')
-    doors = models.CharField(verbose_name='Количество двере.', max_length=1, choices=DOORS_CHOICE)
-    condition = models.CharField(verbose_name='Состояния авто', max_length=2, choices=CONDITION_AUTO)
-    description = models.TextField(verbose_name='Описания авто', max_length=1000, help_text='Максимум 1000 символов')
-    car_photo = models.ImageField(verbose_name='Фото авто', upload_to='car_photo/Y%/%m/%d', unique_for_date=True,
-                                  help_text='Обязательно заполнения картинки!')
-    car_photo_1 = models.ImageField(upload_to='car_photo_1/Y%/%m/%d', unique_for_date=True, blank=True, null=True)
-    car_photo_2 = models.ImageField(upload_to='car_photo_2/Y%/%m/%d', unique_for_date=True, blank=True, null=True)
-    car_photo_3 = models.ImageField(upload_to='car_photo_3/Y%/%m/%d', unique_for_date=True, blank=True, null=True)
-    passengers = models.PositiveSmallIntegerField(verbose_name='Кол пассажиров.', default=0)
-    is_featured = models.BooleanField(verbose_name='Рекомендации.', default=False)
-    created_date = models.DateField(auto_now=True, verbose_name='Дата публикации.')
+
+    door_choices = (
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('6', '6'),
+    )
+
+    year_choice = []
+    for r in range(2000, (datetime.datetime.now().year + 1)):
+        year_choice.append((r, r))
+
+    car_title = models.CharField(max_length=255)
+    state = models.CharField(choices=STATE_CHOICE, max_length=100)
+    city = models.CharField(max_length=100)
+    color = models.CharField(max_length=100, choices=COLOR_CHOICE)
+    model = models.CharField(max_length=100)
+    year = models.IntegerField('year', choices=year_choice)
+    condition = models.CharField(choices=CONDITION_AUTO, max_length=100)
+    description = models.TextField()
+    car_image = models.ImageField(upload_to='car_image/%Y/%m/%d')
+    car_image_1 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
+    car_image_2 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
+    car_image_3 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
+    car_image_4 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
+    features = models.CharField(max_length=100, choices=features_choices)
+    body_style = models.CharField(max_length=100, choices=BODY_STYLE_CHOICE)
+    engine = models.CharField(max_length=255)
+    transmission = models.CharField(max_length=255)
+    interior = models.CharField(max_length=255)
+    miles = models.PositiveIntegerField()
+    doors = models.CharField(max_length=255, default='4', choices=door_choices)
+    passengers = models.IntegerField(default=3, )
+    vin_no = models.CharField(max_length=17)
+    millage = models.IntegerField()
+    fuel_type = models.CharField(max_length=100, choices=FUEL_TYPE_CHOICE)
+    no_of_owners = models.CharField(max_length=100)
+    is_featured = models.BooleanField(default=False)
+    created_date = models.DateTimeField(default=datetime.datetime.now, blank=True)
 
     def __str__(self):
         return self.car_title
