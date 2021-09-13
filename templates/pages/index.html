@@ -35,54 +35,41 @@
             </div>
             <!-- Search box 3 start -->
             <div class="search-box-4 sb-8">
-                <form action="#" method="">
+                <form action="{% url 'search' %}" method="get">
                     <div class="form-group">
                         <input type="text" name="keyword" placeholder="Search by name" class="form-control">
                     </div>
                     <div class="form-group">
                         <select class="form-control search-fields" name="select-brand">
                             <option selected="true" disabled="disabled">Brand</option>
-                            <option>Audi</option>
-                            <option>BMW</option>
-                            <option>Honda</option>
-                            <option>Nissan</option>
-                            <option>Nissan</option>
-                            <option>Nissan</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control search-fields" name="select-make">
-                            <option selected="true" disabled="disabled">Model</option>
-                            <option>BMW</option>
-                            <option>Honda</option>
-                            <option>Lamborghini Huracán</option>
-                            <option>Sports Car</option>
+                            {% for model in search_model %}
+                                <option value="{{ model }}">{{ model }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
                         <select class="form-control search-fields" name="select-location">
                             <option selected="true" disabled="disabled">Location</option>
-                            <option>United States</option>
-                            <option>United Kingdom</option>
+                            {% for location in search_city %}
+                                <option value="{{ location }}">{{ location }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
                         <select class="form-control search-fields" name="select-year">
                             <option selected="true" disabled="disabled">Year</option>
-                            <option>2016</option>
-                            <option>2017</option>
-                            <option>2018</option>
-                            <option>2019</option>
+                            {% for year in search_year %}
+                                <option value="{{ year }}">{{ year }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
                         <select class="form-control search-fields" name="select-type">
                             <option selected="true" disabled="disabled">Select Type Of Car</option>
-                            <option>Sedan</option>
-                            <option>Sports</option>
-                            <option>Hatchback</option>
-                            <option>Pickup Truck</option>
-                            <option>SUV</option>
+                            {% for body in search_body_style %}
+                                <option value="{{ body }}">{{ body }}</option>
+                            {% endfor %}
+
                         </select>
                     </div>
                     <div class="range-slider clearfix">
@@ -138,13 +125,14 @@
                                             <br>
                                             <span>${{ featured_car.price_for_rent }}</span>
                                         </div>
-                                        {% if featured_car.car_image_1.url %}
+                                        {% if featured_car.car_image.url %}
                                             <img class="d-block w-100" src="{{ featured_car.car_image.url }}" alt="car"
-                                                 style="min-height: 262px; max-height: 262px;">>
+                                                 style="min-width: 350px; max-width: 350px; max-height: 240px; min-height: 240px;">
                                         {% else %}
                                             <img class="d-block w-100"
                                                  src="https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                                 alt="car">
+                                                 alt="car"
+                                                 style="min-width: 350px; max-width: 350px; max-height: 240px; min-height: 240px;">
                                         {% endif %}
                                     </a>
                                     <div class="carbox-overlap-wrapper">
@@ -257,13 +245,17 @@
                                             <div class="car-magnify-gallery">
                                                 <a href="{{ last_car.car_image.url }}" class="overlap-btn">
                                                     <i class="fa fa-expand"></i>
-                                                    <img class="hidden" src="{{ last_car.car_image.url }}">
+                                                    <img class="hidden" src="{{ last_car.car_image.url }}"
+                                                         style="min-width: 350px; max-width: 350px; max-height: 240px;
+                                                          min-height: 240px;">
                                                 </a>
                                                 <a href="{{ last_car.car_image_2.url }}" class="hidden">
-                                                    <img class="hidden" src="{{ last_car.car_image_2.url }}">
+                                                    <img class="hidden" src="{{ last_car.car_image_2.url }}"
+                                                         style="min-width: 350px; max-width: 350px; max-height: 240px; min-height: 240px;">
                                                 </a>
                                                 <a href="{{ last_car.car_image_3.url }}" class="hidden">
-                                                    <img class="hidden" src="{{ last_car.car_image_3.url }}">
+                                                    <img class="hidden" src="{{ last_car.car_image_3.url }}"
+                                                         style="min-width: 350px; max-width: 350px; max-height: 240px; min-height: 240px;">
                                                 </a>
                                             </div>
                                         </div>
@@ -348,15 +340,6 @@
     <!-- Intro section start -->
 
     <!-- Intro section end -->
-
-    <!-- Full Page Search -->
-    <div id="full-page-search">
-        <button type="button" class="close">×</button>
-        <form action="https://storage.googleapis.com/theme-vessel/carhouse/index.html#" class="search-header">
-            <input type="search" value="" placeholder="type keyword(s) here. Eg: audi, benz etc"/>
-            <button type="submit" class="btn btn-sm button-theme">Search</button>
-        </form>
-    </div>
 
     <!-- Car Overview Modal -->
     <div class="car-model-2">

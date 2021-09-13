@@ -7,11 +7,22 @@ def home(request):
     team = Team.objects.all()
     featured_cars = Car.objects.filter(is_featured=True, for_rent=True)
     last_cars = Car.objects.filter(for_sale=True)
+    # search_fields = Car.objects.values('model', 'city', 'year', 'body_style')
+    search_model = Car.objects.values_list('model', flat=True).distinct()
+    search_city = Car.objects.values_list('city', flat=True).distinct()
+    search_year = Car.objects.values_list('year', flat=True).distinct()
+    search_body_style = Car.objects.values_list('body_style', flat=True).distinct()
     context = {
         'teams': team,
         'featured_cars': featured_cars,
-        'last_cars': last_cars
+        'last_cars': last_cars,
+        # 'search_fields': search_fields,
+        'search_model': search_model,
+        'search_city': search_city,
+        'search_year': search_year,
+        'search_body_style': search_body_style,
     }
+
     return render(request, 'pages/index.html', context=context)
 
 
