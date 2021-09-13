@@ -2,6 +2,7 @@ from django.db import models
 import datetime
 from ckeditor.fields import RichTextField
 from multiselectfield import MultiSelectField
+from django.urls import reverse
 
 # Create your models here.
 """ Cars model 
@@ -165,7 +166,8 @@ class Car(models.Model):
     year = models.IntegerField('year', choices=year_choice)
     condition = models.CharField(choices=CONDITION_AUTO, max_length=100)
     description = RichTextField()
-    price = models.IntegerField()
+    price_for_rent = models.IntegerField()
+    price_for_sale = models.IntegerField()
     car_image = models.ImageField(upload_to='car_image/%Y/%m/%d')
     car_image_1 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
     car_image_2 = models.ImageField(upload_to='car_image/%Y/%m/%d', blank=True)
@@ -185,9 +187,14 @@ class Car(models.Model):
     # no_of_owners = models.CharField(max_length=100)
     is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(default=datetime.datetime.now, blank=True)
+    for_rent = models.BooleanField(blank=True, null=True)
+    for_sale = models.BooleanField(blank=True, null=True)
 
     def __str__(self):
         return self.car_title
+
+    def get_absolute_url(self):
+        return reverse('car_detail', kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ['-created_date']

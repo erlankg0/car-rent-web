@@ -131,12 +131,12 @@
                         <div class="slick-slide-item">
                             <div class="car-box-3">
                                 <div class="car-thumbnail">
-                                    <a href="{% url 'car_detail' featured_car.pk %}" class="car-img">
-                                        <div class="tag-2">Featured</div>
+                                    <a href="{{ featured_car.get_absolute_url }}" class="car-img">
+                                        <div class="tag-2">FOR RENT</div>
                                         <div class="price-box">
-                                            <span class="del"><del>500.00</del></span>
+                                            <span class="del"><del>${{ featured_car.price_for_rent|add:500 }}</del></span>
                                             <br>
-                                            <span>{{ featured_car.price }}00.00</span>
+                                            <span>${{ featured_car.price_for_rent }}</span>
                                         </div>
                                         {% if featured_car.car_image_1.url %}
                                             <img class="d-block w-100" src="{{ featured_car.car_image.url }}" alt="car"
@@ -224,8 +224,8 @@
         <div class="container">
             <!-- Main title -->
             <div class="main-title">
-                <h1>Latest <span>Cars</span></h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <h1>FOR Sale <span>Cars</span></h1>
+                <p>ALl cars for sale.</p>
             </div>
             <div class="row">
                 {% for last_car in last_cars %}
@@ -285,7 +285,7 @@
                                     <p class="cartype">{{ last_car.body_style }}</p>
                                 </div>
                                 <div class="pull-right">
-                                    <p class="price">${{ last_car.price }}</p>
+                                    <p class="price">${{ last_car.price_for_sale }}</p>
                                 </div>
                             </div>
                         </div>
@@ -426,7 +426,7 @@
                                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                             Lorem
                                             Ipsum has been the industry's standard.</p>
-                                        <a href="car-details.html" class="btn btn-md btn-round btn-theme">Show
+                                        <a href="" class="btn btn-md btn-round btn-theme">Show
                                             Detail</a>
                                     </div>
                                 </div>

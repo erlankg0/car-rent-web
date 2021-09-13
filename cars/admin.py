@@ -14,7 +14,8 @@ class CarAdmin(admin.ModelAdmin):
         'model',
         'fuel_type',
         'state',
-        'price',
+        'price_for_sale',
+        'price_for_rent',
         'is_featured',
 
     )
@@ -23,7 +24,8 @@ class CarAdmin(admin.ModelAdmin):
         'car_title',
         'model',
         'state',
-        'price',
+        'price_for_sale',
+        'price_for_rent',
     )
     list_editable = ('is_featured',)
     list_filter = (
