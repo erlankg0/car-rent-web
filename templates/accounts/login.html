@@ -10,7 +10,7 @@
             <div class="breadcrumb-areas">
                 <h1>Login To Your Account</h1>
                 <ul class="breadcrumbs">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
                     <li class="active">Login</li>
                 </ul>
             </div>
@@ -25,12 +25,12 @@
                 <div class="col-lg-12">
                     <div class="form-section">
                         <div class="logo-2">
-                            <a href="index.html">
-                                <img src="img/logos/black-logo.png" alt="logo">
+                            <a href="{% url 'home' %}">
+                                <img src="{% static 'img/logos/black-logo.png' %}" alt="logo">
                             </a>
                         </div>
                         <h3>Sign into your account</h3>
-                        <form action="#" method="GET">
+                        <form action="{% url 'home' %}" method="get">
                             <div class="form-group form-box">
                                 <input type="email" name="email" class="input-text" placeholder="Email Address"
                                        required>
@@ -55,7 +55,7 @@
                                         class="fa fa-google google-i"></i><span>Google</span></a></li>
                             </ul>
                         </form>
-                        <p>Don't have an account? <a href="signup.html" class="thembo"> Register here</a></p>
+                        <p>Don't have an account? <a href="{% url 'signup' %}" class="thembo"> Register here</a></p>
                     </div>
                 </div>
             </div>

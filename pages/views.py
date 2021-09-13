@@ -46,10 +46,3 @@ def contact(request):
 def service(request):
     return render(request, 'pages/service.html')
 
-
-def login(request):
-    return render(request, 'pages/login.html')
-
-
-def login_up(request):
-    return render(request, 'pages/sigup.html')
