@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 
 def login(request):
@@ -6,9 +7,11 @@ def login(request):
 
 
 def signup(request):
-   if request.method == 'POST':
-
-    return render(request, 'accounts/signup.html')
+    if request.method == 'POST':
+        messages.error(request, 'This is error message')
+        return redirect('signup')
+    else:
+        return render(request, 'accounts/signup.html')
 
 
 def logout(request):
